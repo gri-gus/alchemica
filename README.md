@@ -1,0 +1,2 @@
+# salo
+salo - SQLAlchemy Logger
