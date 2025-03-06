@@ -56,7 +56,7 @@ def patch_sqlalchemy_connection_invoke_before_exec_event():
 def patch_sqlalchemy_compound_listener__call__():
     def patched_call(self, *args, **kw):
         with lock:
-            parent_listeners_copy = list(self.listeners)
+            parent_listeners_copy = list(self.parent_listeners)
         for fn in parent_listeners_copy:
             fn(*args, **kw)
         with lock:
