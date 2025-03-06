@@ -1,9 +1,9 @@
-import threading
-
 from sqlalchemy.engine.base import Connection
 from sqlalchemy.event.attr import _CompoundListener
 
-lock = threading.Lock()
+from alchemica.utils.lock import lock
+
+PATCHED = False
 
 
 def patch_sqlalchemy_connection_invoke_before_exec_event():
@@ -68,5 +68,9 @@ def patch_sqlalchemy_compound_listener__call__():
 
 
 def patch_sqlalchemy_for_multithreading():
-    patch_sqlalchemy_connection_invoke_before_exec_event()
-    patch_sqlalchemy_compound_listener__call__()
+    global PATCHED
+
+    if not PATCHED:
+        patch_sqlalchemy_connection_invoke_before_exec_event()
+        patch_sqlalchemy_compound_listener__call__()
+        PATCHED = True
