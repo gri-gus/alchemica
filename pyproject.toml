@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "alchemica"
-version = "0.0.2-dev5"
+version = "0.0.2-dev6"
 authors = [
     { name = "Grigoriy Gusev", email = "thegrigus@gmail.com" },
 ]
-description = "alchemica - SQLAlchemy Logger"
+description = "Alchemica — SQLAlchemy Logger with logging magic. Sync, async, multithreaded"
 readme = "README-PYPI.md"
 dependencies = [
     "greenlet==3.1.1",
