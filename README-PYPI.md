@@ -1,6 +1,6 @@
 <p align="center">
     <a>
-        <img src="https://raw.githubusercontent.com/gri-gus/alchemica/main/assets/cover.png" alt="alchemica">
+        <img src="https://raw.githubusercontent.com/gri-gus/alchemica/main/assets/cover.jpg" alt="alchemica">
     </a>
 </p>
 
