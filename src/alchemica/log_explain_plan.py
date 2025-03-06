@@ -12,7 +12,7 @@ def get_explain_plan(
     explain_query = text(f"EXPLAIN {compiled_query}")
     result = conn.execute(explain_query)
     plan = result.fetchall()
-    plan = "\n".join(str(i[0]) for i in plan)
+    plan = "\n".join(" ".join(str(i) for i in row) for row in plan)
     return plan
 
 
