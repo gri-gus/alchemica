@@ -11,7 +11,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from alchemica.after_execute import after_execute
 from alchemica.before_execute import before_execute
 from alchemica.utils.default_logger import default_logger
-from alchemica.utils.sqlalchemy_patch import patch_connection_invoke_before_exec_event
+from alchemica.utils.sqlalchemy_patch import patch_sqlalchemy_for_multithreading
 from alchemica.utils.utils import get_uuid, atime
 
 __all__ = ["async_sql_logger", ]
@@ -20,7 +20,7 @@ execution_context_var = ContextVar("execution_context_var")
 sql_request_start_time_var = ContextVar("execution_start_time_var")
 execution_info_var = ContextVar("execution_info_var")
 
-patch_connection_invoke_before_exec_event()
+patch_sqlalchemy_for_multithreading()
 
 
 def async_sql_logger(
