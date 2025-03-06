@@ -4,7 +4,6 @@
     </a>
 </p>
 
-
 <p align="center">
     <a href="https://pypi.org/project/alchemica" target="_blank">
         <img src="https://img.shields.io/pypi/v/alchemica" alt="PyPI">
@@ -455,6 +454,39 @@ outer_function (func_uuid: 77afc9)
 │   └── SQL: SELECT 3 (query_uuid: 86e750)
 └── SQL: SELECT 2 (query_uuid: db39e7)
 ```
+
+## Использование в FastAPI
+
+Вы можете использовать `alchemica` в FastAPI, чтобы отслеживать, какие запросы выполняются в контексте конкретных
+функций и эндпоинтов.
+Рассмотрим пример, когда нужно отладить запросы на эндпоинте:
+
+```python
+from alchemica import sync_sql_logger
+
+
+@router.get("/list", response_model=Result)
+@sync_sql_logger(logger=logger)
+def get_list(
+        db: Session = Depends(get_db),
+        user: User = Depends(get_user_info),
+) -> Result:
+    service = Service(db=db, user=user)
+    result = service.get_list()
+    return result
+```
+
+Вывод в лог:
+
+```text
+2025-03-06 06:23:58,235 - INFO - 🚀 [FUNC](func_name: get_list; func_uuid: ea359a) запущена
+2025-03-06 06:23:58,257 - INFO - 🟢 [SQL](func_name: get_list; func_uuid: ea359a; query_uuid: 3f0931) SELECT "Result".id, "Result"."name" 
+FROM "Result" ORDER BY "Result".name
+2025-03-06 06:23:58,296 - INFO - 🕑️ [SQL](func_name: get_list; func_uuid: ea359a; query_uuid: 3f0931) Выполнено за 0.0383 сек
+2025-03-06 06:23:58,297 - INFO - ✅ [FUNC](func_name: get_list; func_uuid: ea359a) выполнена за 0.0626 сек
+```
+
+Как видно из логов, на этом эндпоинте выполняется только один запрос, и он работает быстро.
 
 ## Логируемые сообщения
 
